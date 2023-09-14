@@ -12,6 +12,8 @@ with open('depression_analyzer.pkl', 'rb') as model_file:
 with open('chat_input.pkl', 'rb') as chat_input_file:
     chat_input = pickle.load(chat_input_file)
 
+
+
 # Define a route for predicting depression
 @app.route('/predict', methods=['POST'])
 def predict_depression():
@@ -28,6 +30,7 @@ def predict_depression():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
