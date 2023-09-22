@@ -1,36 +1,35 @@
 import pickle
-from flask import Flask, request, jsonify
-
-# Create a Flask app
-app = Flask(__name__)
+import sklearn
+import streamlit as st
+from scipy.sparse import csr_matrix  # Import csr_matrix from scipy.sparse
 
 # Load the model from the pickle file
 with open('depression_analyzer.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
-# Load the text input from the pickle file
-with open('chat_input.pkl', 'rb') as chat_input_file:
-    chat_input = pickle.load(chat_input_file)
+# Create a Streamlit web app
+st.title("Depression Analyzer")
 
-
-
-# Define a route for predicting depression
-@app.route('/predict', methods=['POST'])
-def predict_depression():
+# Define a function for making predictions
+def predict_depression(text):
     try:
-        # Get the text data from the request
-        data = request.json
-        text = data['text']
-
         # Make predictions using the loaded model
-        prediction = model.predict([text])
-
-        # Return the prediction as JSON response
-        return jsonify({'prediction': prediction[0]})
-
+        prediction = model.predict([text])[0]
+        return prediction
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return str(e)
 
+# Create a text input for user input
+user_input = st.text_input("Enter text for depression prediction:")
 
+# Create a button to trigger the prediction
+if st.button("Predict"):
+    if user_input:
+        prediction = predict_depression(user_input)
+        st.write(f"Prediction: {prediction}")
+    else:
+        st.write("Please enter text for prediction.")
+
+# Run the Streamlit app
 if __name__ == '__main__':
-    app.run(debug=True)
+    st.run()
