@@ -8,7 +8,7 @@ with open('depression_analyzer.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
 # Create a Streamlit web app
-st.title("Depression Analyzer")
+st.title("Depression Detector")
 
 # Define a function for making predictions
 def predict_depression(text):
