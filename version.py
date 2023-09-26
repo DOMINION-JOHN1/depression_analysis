@@ -1,6 +1,6 @@
 import requests
 # Define the URL of your FastAPI application
-url = ' http://192.168.3.224:9000/predict'  # Replace with your actual URL
+url = 'http://0.0.0.0:2000/predict'  # Replace with your actual URL
 
 # Define the input text
 input_text =input('Your input text: ')
