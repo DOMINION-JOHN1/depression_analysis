@@ -1,6 +1,6 @@
 import pickle
 import sklearn
-from fastapi import FastAPI  # Assuming 'FastAPI' is from 'fastapi' module, not 'main'
+from fastapi import FastAPI
 
 # Load the model from the pickle file
 with open('depression_analyzer.pkl', 'rb') as model_file:
