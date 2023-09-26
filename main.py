@@ -18,7 +18,3 @@ async def predict_depression(text: dict):
         return {"prediction": prediction}
     except Exception as e:
         raise HTTPException(status_code=422, detail=str(e))
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
