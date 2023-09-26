@@ -1,4 +1,4 @@
 - type: web
   name: fastapi-app
   buildCommand: pip install -r requirements.txt
-  startCommand: uvicorn main:app --host 127.0.0.1 --port $PORT
+  startCommand: uvicorn main:app --host 127.0.0.1 --port 8000
