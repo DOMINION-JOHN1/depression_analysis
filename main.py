@@ -1,20 +1,20 @@
 import pickle
 import sklearn
-from fastapi import FastAPI
-
+from fastapi import FastAPI, HTTPException # Assuming 'FastAPI' is from 'fastapi' module, not 'main'
 # Load the model from the pickle file
 with open('depression_analyzer.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
-
 # Create a FastAPI instance
 app = FastAPI()
-
 # Define a function for making predictions
 @app.post("/predict")
-async def predict_depression(text: str):
+async def predict_depression(text: dict):
     try:
+        input_text = text.get("text")
+        if input_text is None:
+            raise HTTPException(status_code=400, detail="Missing 'text' field in request")
         # Make predictions using the loaded model
-        prediction = model.predict([text])[0]
+        prediction = model.predict([input_text])[0]
         return {"prediction": prediction}
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=422, detail=str(e))
