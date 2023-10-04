@@ -35,7 +35,7 @@ async def predict_depression(texts: dict):
             return model.predict([input_text])[0]
 
         # Submit the prediction task to the ThreadPoolExecutor
-        prediction = await asyncio.to_thread(predict, combined_input)
+        prediction = await asyncio.get_event_loop().run_in_executor(executor, lambda: predict(combined_input))
         return {"prediction": prediction}
     except Exception as e:
         # Log the error details
